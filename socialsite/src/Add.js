@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import toastr from 'toastr';
-import 'toastr/build/toastr.min.css';
+import toastr from "toastr";
+import "toastr/build/toastr.min.css";
 
 function Add(props) {
   const [state, cState] = useState({
@@ -40,16 +40,20 @@ function Add(props) {
     props.onsubmit(state.username, state.postText, state.likes);
     toastr.success("Successfully added post!");
     cState({
-        username: "",
-        postText: "",
-        likes: 0,
+      username: "",
+      postText: "",
+      likes: 0,
     });
-    
-};
+  };
 
   return (
     <div className="container">
-      <Form>
+      {/* old code */}
+      {/* <Form onSubmit*/}
+      {/* old code */}
+      {/* new code */}
+      <Form onSubmit={submitHandler}>
+        {/* new code */}
         <Form.Group controlId="username">
           <Form.Label>Username</Form.Label>
           <Form.Control
