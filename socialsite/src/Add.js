@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import * as Icon from 'react-bootstrap-icons';
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
 
 function Add(props) {
   const [state, cState] = useState({
+    postId: 0,
     username: "",
     postText: "",
     likes: 0,
@@ -37,9 +39,11 @@ function Add(props) {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onsubmit(state.username, state.postText, state.likes);
+    const newId = this.state.postId + 1;
+    props.onsubmit(newId, state.username, state.postText, state.likes);
     toastr.success("Successfully added post!");
     cState({
+      postId: newId,
       username: "",
       postText: "",
       likes: 0,
@@ -73,7 +77,7 @@ function Add(props) {
         </Form.Group>
 
         <Button variant="primary" type="submit">
-          Add Post
+          <Icon.Pen /> Add Post
         </Button>
       </Form>
     </div>

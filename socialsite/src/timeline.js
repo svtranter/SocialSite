@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./App.scss";
 import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import * as Icon from 'react-bootstrap-icons';
 
 function Timeline(props) {
   const [state, cState] = useState([
@@ -11,9 +13,9 @@ function Timeline(props) {
   const buildPosts = () => {
     return props.posts.map((current, v) => (
       <Card key={v}>
-        <Card.Title>{current.username}</Card.Title>
+        <Card.Title id="username">{current.username}</Card.Title>
         <Card.Body>{current.postText}</Card.Body>
-        <Card.Footer>This post has {current.likes} likes!</Card.Footer>
+        <Card.Footer className="text-end">This post has {current.likes} likes! <Button variant="primary" id="like-button"><Icon.HandThumbsUp /> Like</Button></Card.Footer>
       </Card>
     ));
   };
