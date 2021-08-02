@@ -9,23 +9,28 @@ import Navbar from "react-bootstrap/Navbar";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function App() {
+  // added post ids
   const [postCards, cPostCards] = useState([
-    { username: "Vic", postText: "Hello everyone", likes: 2 },
-    { username: "Robert", postText: "Hello Vic", likes: 1 },
+    { username: "Vic", postText: "Hello everyone", likes: 2, id: 0 },
+    { username: "Robert", postText: "Hello Vic", likes: 1, id: 1 },
   ]);
 
-  useEffect(() => {
-    const postContents = localStorage.getItem("post");
-    cPostCards(
-      JSON.parse(postContents) || []
-    )
-  }, [])
+  // useEffect(() => {
+  //   const postContents = localStorage.getItem("post");
+  //   cPostCards(JSON.parse(postContents) || []);
+  // }, []);
+
+  // do something now that post obj is returned once it has been liked
+  const updateLikes = (obj) => {
+    console.log(obj);
+  };
 
   const updatePostCards = (username, postText, likes) => {
-    const postCard = { username, postText, likes }
-    cPostCards((state) => [...state, postCard], localStorage.setItem(
-    "post",
-    JSON.stringify([...postCards, postCard])))
+    const postCard = { username, postText, likes };
+    cPostCards(
+      (state) => [...state, postCard],
+      localStorage.setItem("post", JSON.stringify([...postCards, postCard]))
+    );
   };
 
   return (
@@ -48,15 +53,16 @@ function App() {
       <Container>
         <Switch>
           <Route exact path="/">
-            <Timeline posts={postCards} />
+            <Timeline posts={postCards} updateLikes={updateLikes} />
           </Route>
           <Route path="/add">
-            <Add onsubmit={(username, postText, likes) =>
-          updatePostCards(username, postText, likes)} />
+            <Add
+              onsubmit={(username, postText, likes) =>
+                updatePostCards(username, postText, likes)
+              }
+            />
           </Route>
-          <Route path="/">
-            Error: 404 not found
-          </Route>
+          <Route path="/">Error: 404 not found</Route>
         </Switch>
       </Container>
     </Router>
