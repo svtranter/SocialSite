@@ -15,18 +15,30 @@ function App() {
     { username: "Robert", postText: "Hello Vic", likes: 1, id: 1 },
   ]);
 
-  // useEffect(() => {
-  //   const postContents = localStorage.getItem("post");
-  //   cPostCards(JSON.parse(postContents) || []);
-  // }, []);
+  useEffect(() => {
+    //localStorage.removeItem("post");
+    const postContents = localStorage.getItem("post");
+    cPostCards(JSON.parse(postContents) || []);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("post", JSON.stringify(postCards));
+  }, [postCards]);
 
   // do something now that post obj is returned once it has been liked
   const updateLikes = (obj) => {
-    console.log(obj);
+    const updatedLikes = postCards.map((c) => {
+      if (c.id === obj.id) {
+        c.likes = c.likes + 1;
+      }
+      return c;
+    });
+    cPostCards(updatedLikes);
   };
 
-  const updatePostCards = (username, postText, likes) => {
-    const postCard = { username, postText, likes };
+  const updatePostCards = (id, username, postText, likes) => {
+    const postCard = { id, username, postText, likes };
+
     cPostCards(
       (state) => [...state, postCard],
       localStorage.setItem("post", JSON.stringify([...postCards, postCard]))
@@ -57,8 +69,9 @@ function App() {
           </Route>
           <Route path="/add">
             <Add
-              onsubmit={(username, postText, likes) =>
-                updatePostCards(username, postText, likes)
+              posts={postCards}
+              onsubmit={(id, username, postText, likes) =>
+                updatePostCards(id, username, postText, likes)
               }
             />
           </Route>

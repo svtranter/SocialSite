@@ -5,18 +5,11 @@ import Button from "react-bootstrap/Button";
 
 import * as Icon from "react-bootstrap-icons";
 
-
 function Timeline(props) {
-  // const [state, cState] = useState([
-  //   { username: "Vic", postText: "Hello everyone", likes: 2 },
-  //   { username: "Robert", postText: "Hello Vic", likes: 1 },
-  // ]);
-
   // do something with the post obj passed in
   const likeHandler = (e) => {
-    console.log("clicked a like", e);
-    const { username, postText, likes } = e;
-    props.updateLikes({ username, postText, likes: likes + 1 });
+    const { id, username, postText, likes } = e;
+    props.updateLikes({ id, username, postText, likes: likes + 1 });
   };
 
   const buildPosts = () => {
@@ -25,7 +18,7 @@ function Timeline(props) {
       <Card key={v}>
         <Card.Title id="username">{current.username}</Card.Title>
         <Card.Body>{current.postText}</Card.Body>
-
+        
         <Card.Footer className="text-end">
           This post has {current.likes} likes!
           <Button
@@ -37,7 +30,6 @@ function Timeline(props) {
             <Icon.HandThumbsUp /> Like
           </Button>
         </Card.Footer>
-
       </Card>
     ));
   };
